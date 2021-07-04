@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies-deployment
+spec:
+  selector:
+    matchLabels:
+      app: movies
+  template:
+    metadata:
+      labels:
+        app: movies
+    spec:
+      containers:
+        - name: movies
+          image: hsulimann/rotten-potatoes:1.0
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGODB_DB
+              value: admin
+            - name: MONGODB_HOST
+              value: mongo-svc
+            - name: MONGODB_PORT
+              value: "27017"
+            - name: MONGODB_USERNAME
+              value: mongouser
+            - name: MONGODB_PASSWORD
+              value: mongopwd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: movies-svc
+spec:
+  selector:
+    app: movies
+  ports:
+    - port: 80
+      targetPort: 5000
+  type: LoadBalancer
