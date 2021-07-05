@@ -51,7 +51,7 @@ jobs:
         with:
           k8s-url: ${{ secrets.KUBE_SERVER }}
           k8s-secret: ${{ secrets.KUBE_SECRET }} 
-          token: ${{ secret.KUBE_TOKEN }}
+          token: ${{ secrets.KUBE_TOKEN }}
       - name: Deploy to Kubernetes cluster
         uses: Azure/k8s-deploy@v1
         with:
