@@ -52,4 +52,10 @@ jobs:
           k8s-url: ${{ secrets.KUBE_SERVER }}
           k8s-secret: ${{ secrets.KUBE_SECRET }} 
           token: ${{ secret.KUBE_TOKEN }}
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v1
+        with:
+          manifests: | 
+            k8s/rotten-potatoes.yaml
+            k8s/web.yaml
       
