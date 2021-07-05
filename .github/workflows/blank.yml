@@ -37,3 +37,19 @@ jobs:
           push: true
           tags: |
               hsulimann/rotten-potatoes:latest
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Kubernetes set context
+        uses: Azure/k8s-set-context@v1.1
+        with:
+          k8s-url: ${{ secrets.KUBE_SERVER }}
+          k8s-secret: ${{ secrets.KUBE_SECRET }} 
+          token: ${{ secret.KUBE_TOKEN }}
+      
